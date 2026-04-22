@@ -5,7 +5,7 @@
 ## 项目概述
 
 - **语言**: Go 1.22
-- **模块**: `git.in.zhihu.com/knowledge-market/km-horde`
+- **模块**: `<your-module-path>`
 - **服务**: web、admin、web、rpc 服务，异步任务，定时任务
 - **核心组件**: router、cron、starter（可执行文件）
 
@@ -172,7 +172,7 @@ config.StatsdClient.Increment("metric_name.entry")
 
 ### **重要** 禁止使用
 - 代码中禁止使用 `panic` 处理
-- 禁止裸使用 `go func` 语法，所有 goroutine 使用必须要使用 `git.in.zhihu.com/bit/tools/errgroup` 处理
+- 禁止裸使用 `go func` 语法，所有 goroutine 使用必须要使用 `<your-errgroup-package>` 处理
 
 ## 代码检查
 

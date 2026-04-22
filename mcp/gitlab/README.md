@@ -51,7 +51,7 @@ npx -y @zereight/mcp-gitlab
       "args": ["-y", "@zereight/mcp-gitlab"],
       "env": {
         "GITLAB_PERSONAL_ACCESS_TOKEN": "your_gitlab_token",
-        "GITLAB_API_URL": "https://git.in.zhihu.com/api/v4"
+        "GITLAB_API_URL": "https://gitlab.com/api/v4"
       }
     }
   }
@@ -72,7 +72,7 @@ npx -y @zereight/mcp-gitlab
       "args": ["-y", "@zereight/mcp-gitlab"],
       "env": {
         "GITLAB_PERSONAL_ACCESS_TOKEN": "your_gitlab_token",
-        "GITLAB_API_URL": "https://git.in.zhihu.com/api/v4"
+        "GITLAB_API_URL": "https://gitlab.com/api/v4"
       }
     }
   }
@@ -92,7 +92,7 @@ npx -y @zereight/mcp-gitlab
         "-y",
         "@zereight/mcp-gitlab",
         "--token=YOUR_GITLAB_TOKEN",
-        "--api-url=https://git.in.zhihu.com/api/v4"
+        "--api-url=https://gitlab.com/api/v4"
       ]
     }
   }

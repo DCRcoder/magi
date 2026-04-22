@@ -147,12 +147,3 @@ uvx mcp-atlassian \
 - **更新现有页面**：使用 `confluence_update_page` 工具来修改现有页面的内容
 - **管理页面结构**：使用 `confluence_get_page_children` 和 `confluence_get_page_ancestors` 工具来浏览和管理页面层次结构
 
-## 知乎内部配置
-
-对于知乎内部 Confluence（wiki.in.zhihu.com），配置命令示例：
-
-```bash
-uvx mcp-atlassian --confluence-url=https://wiki.in.zhihu.com --confluence-personal-token=<your_personal_token>
-```
-
-在 Cursor 或 Claude Code 中的配置只需替换对应的 URL 和令牌即可。
