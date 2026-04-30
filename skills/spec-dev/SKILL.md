@@ -1,6 +1,6 @@
 ---
 name: spec-dev
-description: 规范优先的开发工作流。当用户提到"实现 XXX"、"开始做 XXX"、"开发 XXX 功能"、或需要基于业务文档进行开发时触发。在开发中发现问题需要回溯更新规范（设计与实现冲突、遗漏需求场景、现有模块联动、业务逻辑修正）时也使用此 skill。使用此 skill 进行规范先行的开发流程：读取相关业务文档 → 生成 SPEC 规范 → 实现 → 完成后更新业务文档。配合 /doc 目录下的现有业务文档和 openspec 工具使用。
+description: 规范优先的开发工作流。当用户提到"实现 XXX"、"开始做 XXX"、"开发 XXX 功能"、或需要基于业务文档进行开发时触发。在开发中发现问题需要回溯更新规范（设计与实现冲突、遗漏需求场景、现有模块联动、业务逻辑修正）时也使用此 skill。使用此 skill 进行规范先行的开发流程：先通过 brainstroming-dev 对齐方案 → 读取相关业务文档 → 生成 SPEC 规范 → 实现 → 完成后更新业务文档。配合 /doc 目录下的现有业务文档和 openspec 工具使用。
 ---
 
 # Spec-Dev 工作流
@@ -8,10 +8,11 @@ description: 规范优先的开发工作流。当用户提到"实现 XXX"、"开
 ## 核心理念
 
 **规范先行 (Spec-First Development)**：
-1. 先理解业务文档，明确需求
-2. 使用 openspec 工具创建和管理 SPEC 规范
-3. 基于 SPEC 实现代码
-4. 实现完成后更新业务文档
+1. 先通过 `brainstroming-dev` 完成方案讨论与对齐
+2. 再理解业务文档，明确需求
+3. 使用 openspec 工具创建和管理 SPEC 规范
+4. 基于 SPEC 实现代码
+5. 实现完成后更新业务文档
 
 ## 工作流程
 
@@ -19,7 +20,8 @@ description: 规范优先的开发工作流。当用户提到"实现 XXX"、"开
 
 ```
 新建模式：
-STEP 1 (需求收集) 
+STEP 0 (brainstroming-dev 方案对齐)
+  → STEP 1 (需求收集) 
   → STEP 2 (创建变更) 
   → STEP 3 (创建规范) 
   → STEP 4 (用户确认) 
@@ -27,7 +29,8 @@ STEP 1 (需求收集)
   → STEP 6 (更新业务文档)
 
 迭代模式：
-STEP 7 (更新规范) 
+STEP 0 (brainstroming-dev 方案对齐)
+  → STEP 7 (更新规范) 
   ↓
   → STEP 4 (用户确认) ←──┐
   → STEP 5 (实现代码)     │
@@ -38,6 +41,21 @@ STEP 7 (更新规范)
 ```
 
 > 🔴 **关键循环点**：STEP 7 完成规范更新后，必须重新进入 STEP 4 确认，形成完整的开发循环
+
+### Step 0: 前置流程（brainstroming-dev）
+
+> 🔴 **强制前置步骤** — 进入 spec-dev 之前，必须先完成 `brainstroming-dev` 方案对齐
+
+当用户触发 spec-dev 时，先执行：
+
+1. 调用 `brainstroming-dev`，完成需求澄清、方案比较与方案确认
+2. 用户明确确认最终方案后，再进入 Step 1（新建）或 Step 7（迭代）
+3. 在进入后续步骤前，必须先输出 `[STEP 0 DONE]`
+
+> 🔴 **未完成 Step 0 时，不允许创建规范或实现代码**
+> 🔴 **如果上下文超长，重新 view 本文件确认流程**
+
+---
 
 ### Step 1: 需求收集
 
@@ -225,10 +243,10 @@ STEP 5 未完成前，始终询问用户是否需要 Review：
 }
 ```
 
-审查完成后展示 agent 意见。根据意见修复问题后，重新回答**代码 Review 流程**，用户确认后才能进入 Step 6。
+审查完成后展示 agent 意见。根据意见修复问题后，重新回到**代码 Review 流程**，用户确认后才能进入 Step 6。
 
 **处理用户直接提出的修改意见**：
-当用户选择选项 2 或直接描述修改意见时，根据意见完成修复后，同样需要**代码 Review 流程**，用户确认后才能进入 Step 6。
+当用户选择选项 2 或直接描述修改意见时，根据意见完成修复后，同样需要回到**代码 Review 流程**，用户确认后才能进入 Step 6。
 
 > 🔴 **完成本步后，必须输出 `[STEP 5 DONE]` 再继续**
 > 🔴 **如果上下文超长，重新 view 本文件确认流程**
@@ -333,12 +351,12 @@ STEP 5 未完成前，始终询问用户是否需要 Review：
 
 #### 7.3 问题分类处理
 
-| 问题类型 | 处理方式 | 需要更新的文档 |
-|---------|---------|---------------|
-| 设计遗漏 | 更新 design.md + tasks.md | 规范 + 业务文档（必须用 knowledge-doc） |
-| 需求变更 | 更新 proposal.md + design.md | 规范 + 业务文档（必须用 knowledge-doc） |
-| 技术方案调整 | 更新 design.md | 规范 |
-| 现有模块联动 | 更新 tasks.md | 规范 + 业务文档（必须用 knowledge-doc） |
+| 问题类型     | 处理方式                     | 需要更新的文档                          |
+| ------------ | ---------------------------- | --------------------------------------- |
+| 设计遗漏     | 更新 design.md + tasks.md    | 规范 + 业务文档（必须用 knowledge-doc） |
+| 需求变更     | 更新 proposal.md + design.md | 规范 + 业务文档（必须用 knowledge-doc） |
+| 技术方案调整 | 更新 design.md               | 规范                                    |
+| 现有模块联动 | 更新 tasks.md                | 规范 + 业务文档（必须用 knowledge-doc） |
 
 #### 7.4 关键原则
 
@@ -352,21 +370,30 @@ STEP 5 未完成前，始终询问用户是否需要 Review：
 
 ## openspec 常用命令
 
-| 命令 | 说明 |
-|------|------|
-| `openspec list` | 列出所有变更 |
-| `openspec new change {name}` | 创建新变更 |
-| `openspec status --change {name}` | 查看变更状态 |
+| 命令                                               | 说明                   |
+| -------------------------------------------------- | ---------------------- |
+| `openspec list`                                    | 列出所有变更           |
+| `openspec new change {name}`                       | 创建新变更             |
+| `openspec status --change {name}`                  | 查看变更状态           |
 | `openspec instructions {artifact} --change {name}` | 获取 artifact 创建指导 |
-| `openspec apply {name}` | 开始实现任务 |
-| `openspec verify {name}` | 验证实现完整性 |
-| `openspec archive {name}` | 归档完成的变更 |
+| `openspec apply {name}`                            | 开始实现任务           |
+| `openspec verify {name}`                           | 验证实现完整性         |
+| `openspec archive {name}`                          | 归档完成的变更         |
 
 ## 输出格式
 
 ### 首次触发时输出：
 
 ```
+[STEP 0 START] 💡 方案前置对齐
+
+在进入 Spec-Dev 之前，先完成 brainstroming-dev 方案讨论与确认。
+请先描述你要实现的目标，我会先进入方案对齐流程（Step 0）。
+```
+
+```
+[STEP 0 DONE] ✅ 方案已对齐，进入 Spec-Dev
+
 [STEP 1 START] 📋 Spec-Dev 工作流
 
 请选择操作模式：
