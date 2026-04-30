@@ -28,7 +28,35 @@ magi/
 └── tools/              # Tools 目录（待补充）
 ```
 
-## Tools
+## 一键安装
+
+在仓库根目录执行下面三个命令，可以把当前仓库里的 `skills/` 和 `agents/` 安装到对应工具的用户级别或项目级别目录。
+
+默认不传参数时，安装到用户级别。传 `project` 时，安装到当前仓库的项目级别目录。
+
+```bash
+bash install-claude.sh
+bash install-codex.sh
+bash install-cursor.sh
+```
+
+项目级别示例：
+
+```bash
+bash install-claude.sh project
+bash install-codex.sh project
+bash install-cursor.sh project
+```
+
+只安装单一类型示例：
+
+```bash
+bash install-claude.sh user skills
+bash install-codex.sh project agent
+bash install-cursor.sh skills
+```
+
+## 依赖工具
 
 | 工具 | 说明 | 地址 |
 |-----|------|------|
